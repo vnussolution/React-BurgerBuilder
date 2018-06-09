@@ -12,6 +12,8 @@ const controls = [
 const buildControls = props => {
   return (
     <div className={classes.BuildControls}>
+      <p>Subtotal is {props.price.toFixed(3)}</p>
+
       {controls.map(control => (
         <BuildControl
           key={control.label}
@@ -22,6 +24,13 @@ const buildControls = props => {
           disabled={props.disabled[control.type]}
         />
       ))}
+      <button
+        onClick={props.orderNow}
+        className={classes.OrderButton}
+        disabled={!props.purchaseable}
+      >
+        ORDER NOW
+      </button>
     </div>
   );
 };

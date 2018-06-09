@@ -2,8 +2,6 @@ import React from "react";
 import classes from "./burger.css";
 import Ingredients from "./ingredient/ingredient";
 const burger = props => {
-  const arr = Array(2);
-  console.log(" test array ", [...Array(4)], Array(5), ...arr);
   let transformedIngredients = Object.keys(props.ingredients)
     .map(igKey => {
       return [...Array(props.ingredients[igKey])].map((_, index) => {
