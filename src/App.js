@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
+import Blog from "./containers/Blog/Blog";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <h2>hello </h2>
-
-        <button> toggle </button>
-
-        <input type="text" />
-        <p> the length is</p>
+        <Blog />
       </div>
     );
   }
