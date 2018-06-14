@@ -6,8 +6,8 @@ import registerServiceWorker from "./registerServiceWorker";
 import axios from "axios";
 
 axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
-axios.defaults.headers.common["Authorization"] = "Frankie TOKEN";
-axios.defaults.headers.post["content-type"] = "application/json";
+// axios.defaults.headers.common["Authorization"] = "Frankie TOKEN";
+axios.defaults.headers.post["content-type"] = "application/json1";
 
 axios.interceptors.request.use(
   request => {

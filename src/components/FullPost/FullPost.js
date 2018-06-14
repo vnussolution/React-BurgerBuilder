@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "../../axios";
 
 import classes from "./FullPost.css";
 
@@ -13,7 +13,7 @@ class FullPost extends Component {
         this.state.loadedPost.id !== this.props.id)
     ) {
       console.log("aaa", this.props.id);
-      axios.get("/posts/" + this.props.id).then(response => {
+      axios.get("/photos/" + this.props.id).then(response => {
         this.setState({ loadedPost: response.data });
         console.log("loadedPost: ", response.data);
       });
