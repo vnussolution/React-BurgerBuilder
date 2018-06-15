@@ -10,12 +10,14 @@ class OrderSummary extends Component {
   }
 
   render() {
-    const summary = Object.keys(this.props.ing).map(ingKey => (
-      <li key={ingKey}>
-        <span style={{ textTransform: "capitalize" }}>{ingKey}</span> :
-        {this.props.ing[ingKey]}
-      </li>
-    ));
+    let summary = <p> you don't have ingredients</p>;
+    if (this.props.ing)
+      summary = Object.keys(this.props.ing).map(ingKey => (
+        <li key={ingKey}>
+          <span style={{ textTransform: "capitalize" }}>{ingKey}</span> :
+          {this.props.ing[ingKey]}
+        </li>
+      ));
     return (
       <Aux>
         <h3>Your order's details</h3>

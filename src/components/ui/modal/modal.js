@@ -5,8 +5,15 @@ import Aux from "../../../hoc/aux/aux";
 
 class Modal extends Component {
   // implement this hook to prevent updating any nested component
+
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.show !== this.props.show;
+    console.log("shouldComponentUpdate Modal ", nextProps, this.props);
+    return (
+      nextProps.show !== this.props.show ||
+      // add this condition so that any changes from children can be detected,
+      //like loading spinners
+      nextProps.children !== this.props.children
+    );
   }
 
   componentWillUpdate() {
