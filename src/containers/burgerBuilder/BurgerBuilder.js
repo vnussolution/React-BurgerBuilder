@@ -16,16 +16,24 @@ class BurgerBuilder extends Component {
     totalPrice: 4,
     purchaseable: false,
     showOrderSummary: false,
-    loading: false
+    loading: false,
+    error: false
   };
 
   componentDidMount = () => {
-    axios.get("/ingredients.json1").then(response => {
-      console.log(" componentDidMount Burgerbuilder: ", response.data);
-      setTimeout(() => {
-        this.setState({ ingredients: response.data });
-      }, 1111);
-    });
+    axios
+      .get("https://react-burger-9c0ef.firebaseio.com/ingredients.json")
+      .then(response => {
+        console.log(" componentDidMount Burgerbuilder: ");
+        if (response)
+          setTimeout(() => {
+            this.setState({ ingredients: response.data });
+          }, 1111);
+      })
+      .catch(error => {
+        this.setState({ error: true });
+        console.log("componentDidMount :error:", error);
+      });
   };
 
   toggleOrderSummary = () => {
@@ -74,7 +82,7 @@ class BurgerBuilder extends Component {
     };
 
     axios
-      .post("/orders.json", data)
+      .post("/orders.json1", data)
       .then(response => {
         console.log("post order: ", response);
         setTimeout(() => {
@@ -93,7 +101,11 @@ class BurgerBuilder extends Component {
     const ingredients = { ...this.state.ingredients };
     const disabled = {};
     let orderSummary = <Spinner message=" posting order" />;
-    let burgerControl = <Spinner message="getting ingredients" />;
+    let burgerControl = this.state.error ? (
+      <h2>Problem with getting ingredients</h2>
+    ) : (
+      <Spinner message="getting ingredients" />
+    );
 
     for (let ingKey in ingredients) {
       disabled[ingKey] = ingredients[ingKey] <= 0;
