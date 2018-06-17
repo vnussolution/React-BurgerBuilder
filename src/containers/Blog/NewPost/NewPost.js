@@ -9,6 +9,10 @@ class NewPost extends Component {
     author: "Max"
   };
 
+  componentDidMount = () => {
+    console.log("componentDidMount: NewPost ", this.props);
+  };
+
   sendPost = () => {
     const dataPost = {
       title: this.state.title,
