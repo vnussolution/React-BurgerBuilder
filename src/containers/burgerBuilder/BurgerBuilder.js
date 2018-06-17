@@ -71,8 +71,6 @@ class BurgerBuilder extends Component {
   purchaseContinueHandler = () => {
     this.setState({ loading: true });
 
-    console.log("continue....");
-
     const data = {
       ingredients: this.state.ingredients,
       price: this.state.totalPrice,
@@ -82,19 +80,13 @@ class BurgerBuilder extends Component {
     };
 
     axios
-      .post("/orders.json1", data)
+      .post("/orders.json", data)
       .then(response => {
-        console.log("post order: ", response);
-        setTimeout(() => {
-          this.setState({ loading: false, showOrderSummary: false });
-          console.log("bbb");
-        }, 2222);
+        this.setState({ loading: false, showOrderSummary: false });
       })
       .catch(error => {
-        console.log("post order error: ", error);
         this.setState({ loading: false, showOrderSummary: false });
       });
-    console.log("aaaa");
   };
 
   render() {
