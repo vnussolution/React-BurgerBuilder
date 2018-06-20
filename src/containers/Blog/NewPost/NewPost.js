@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 import classes from "./NewPost.css";
+import { Redirect } from "react-router-dom";
 
 class NewPost extends Component {
   state = {
     title: "",
     content: "",
-    author: "Max"
+    author: "Max",
+    redirect: false
   };
 
   componentDidMount = () => {
@@ -23,7 +25,10 @@ class NewPost extends Component {
       method: "post",
       url: "/posts",
       data: dataPost
-    }).then(response => console.log("post: ", response));
+    }).then(response => {
+      console.log("post: ", response);
+      this.setState({ redirect: true });
+    });
     // .post("https://jsonplaceholder.typicode.com/posts", data)
     // .then(response => {
     //   console.log("post :", response);
@@ -31,8 +36,10 @@ class NewPost extends Component {
   };
 
   render() {
+    let redirect = this.state.redirect ? <Redirect to="/Posts" /> : null;
     return (
       <div className={classes.NewPost}>
+        {redirect}
         <h1>Add a Post</h1>
         <label>Title</label>
         <input

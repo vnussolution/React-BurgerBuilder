@@ -1,39 +1,51 @@
 import React, { Component } from "react";
 import Posts from "./Posts/posts";
-import NewPost from "./NewPost/NewPost";
+// import NewPost from "./NewPost/NewPost";
+import asyncComponent from "../../hoc/asyncComponent";
+import FullPost from "./FullPost/FullPost";
 import classes from "./Blog.css";
-import { Route, Link } from "react-router-dom";
+import { Route, NavLink, withRouter, Switch, Redirect } from "react-router-dom";
+
+const AsyncNewPost = asyncComponent(() => {
+  return import("./NewPost/NewPost");
+});
 
 class Blog extends Component {
   render() {
+    console.log("blog::: ", this.props);
     return (
       <div className={classes.Blog}>
         <header>
           <nav>
             <ul>
               <li>
-                <Link to="/">Home</Link>
+                <NavLink to="/posts" exact activeClassName={classes.active}>
+                  Home
+                </NavLink>
               </li>
               <li>
-                <Link
+                <NavLink
                   to={{
                     pathname: "/new-post",
                     hash: "#hello",
                     search: "?quick-test=true"
                   }}
+                  activeClassName={classes.active}
                 >
                   New Post
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </nav>
         </header>
-        <Route path="/" exact render={() => <h1>hello</h1>} />
-        <Route path="/" exact component={Posts} />
-        <Route path="/new-post" exact component={NewPost} />
+        <Switch>
+          <Route path="/new-post" component={AsyncNewPost} />
+          <Route path="/posts" component={Posts} />
+          <Redirect from="/" to="/posts" />
+        </Switch>
       </div>
     );
   }
 }
 
-export default Blog;
+export default withRouter(Blog);
