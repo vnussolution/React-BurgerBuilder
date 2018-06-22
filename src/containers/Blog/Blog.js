@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Posts from "./Posts/posts";
 // import NewPost from "./NewPost/NewPost";
-import asyncComponent from "../../hoc/asyncComponent";
-import FullPost from "./FullPost/FullPost";
+import asyncComponent from "../../hoc/asyncComponent"; //lazy loading way
 import classes from "./Blog.css";
 import { Route, NavLink, withRouter, Switch, Redirect } from "react-router-dom";
 
