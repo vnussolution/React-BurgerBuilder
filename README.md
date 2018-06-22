@@ -1,4 +1,4 @@
-## React Burger builder
+# React Burger builder
 
 This github is split into different branches which correlate to different phases during building the app.
 

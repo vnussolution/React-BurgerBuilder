@@ -7,7 +7,7 @@ const items = props => {
       <Item link="/" active>
         Burger builder
       </Item>
-      <Item link="/"> Burger builder</Item>
+      <Item link="/"> Check Out</Item>
     </ul>
   );
 };
