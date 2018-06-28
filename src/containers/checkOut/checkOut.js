@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import CheckOutSummary from "../../components/order/checkOutSummary/checkOutSummary";
+import ContactData from "./ContactData/contactData";
+import { Route } from "react-router-dom";
 
 class CheckOut extends Component {
-  state = { ingredients: { salad: 1, meat: 1, cheese: 1, bacon: 1 } };
+  state = { ingredients: null, totalPrice: 0 };
 
   cancel = () => {
     console.log("cancel");
@@ -10,18 +12,23 @@ class CheckOut extends Component {
   };
 
   continue = () => {
-    console.log(
-      "continue",
-      this.props,
-      JSON.parse(this.props.match.params.ingredients)
-    );
-    // this.props.history.replace("/checkout/submit");
+    this.props.history.replace(`${this.props.match.path}/contact-data`);
   };
-  componentWillMount = () => {
-    this.setState({
-      ingredients: JSON.parse(this.props.match.params.ingredients)
-    });
-  };
+  componentDidMount() {
+    // this.setState({
+    //   ingredients: JSON.parse(this.props.match.params.ingredients)
+    // });
+    const query = new URLSearchParams(this.props.location.search);
+    const ing = {};
+    let price = 0;
+    for (let param of query.entries()) {
+      // [['salad':'1'],['meat':'2']]
+      if (param[0] === "price") {
+        price = param[1];
+      } else ing[param[0]] = +param[1];
+    }
+    this.setState({ ingredients: ing, totalPrice: price });
+  }
   render() {
     return (
       <div>
@@ -29,6 +36,16 @@ class CheckOut extends Component {
           ingredients={this.state.ingredients}
           cancelCheckOut={this.cancel}
           continueCheckOut={this.continue}
+        />
+        <Route
+          path={`${this.props.match.path}/contact-data`}
+          render={props => (
+            <ContactData
+              ingredients={this.state.ingredients}
+              {...props}
+              price={this.state.totalPrice}
+            />
+          )}
         />
       </div>
     );

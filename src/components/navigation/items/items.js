@@ -4,10 +4,10 @@ import Item from "./item/item";
 const items = props => {
   return (
     <ul className={classes.Items}>
-      <Item link="/" active>
+      <Item link="/" exact>
         Burger builder
       </Item>
-      <Item link="/"> Check Out</Item>
+      <Item link="/orders"> Orders</Item>
     </ul>
   );
 };
