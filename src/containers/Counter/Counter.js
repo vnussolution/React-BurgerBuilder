@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
 
@@ -11,9 +11,8 @@ class Counter extends Component {
   counterChangedHandler = (action, value) => {
     switch (action) {
       case "inc":
-        this.setState(prevState => {
-          return { counter: prevState.counter + 1 };
-        });
+        console.log(" counter: ", this.props);
+        this.props.onIncrementCounter();
         break;
       case "dec":
         this.setState(prevState => {
@@ -38,10 +37,10 @@ class Counter extends Component {
   render() {
     return (
       <div>
-        <CounterOutput value={this.state.counter} />
+        <CounterOutput value={this.props.ctr} />
         <CounterControl
           label="Increment"
-          clicked={() => this.counterChangedHandler("inc")}
+          clicked={this.props.onIncrementCounter}
         />
         <CounterControl
           label="Decrement"
@@ -59,5 +58,13 @@ class Counter extends Component {
     );
   }
 }
-
-export default Counter;
+const mapStateToProps = state => {
+  return { ctr: state.counter };
+};
+const mapDispatchToProps = dispatch => {
+  return { onIncrementCounter: () => dispatch({ type: "INCREMENT" }) };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Counter);
