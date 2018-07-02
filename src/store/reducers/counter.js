@@ -2,7 +2,7 @@ import * as actionTypes from "../actions";
 
 const initialState = { counter: 0, results: [] };
 
-const reducer = (state = initialState, action) => {
+const counterReducer = (state = initialState, action) => {
   console.log("reducer: ", action.type);
   switch (action.type) {
     case actionTypes.INCREMENT:
@@ -18,4 +18,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default counterReducer;

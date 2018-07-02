@@ -2,12 +2,11 @@ import * as actionTypes from "../actions";
 
 const initialState = { results: [] };
 
-const reducer = (state = initialState, action) => {
+const resultReducer = (state = initialState, action) => {
   console.log("reducer: ", action.type);
   switch (action.type) {
     case actionTypes.STORE_NUMBER:
       console.log(" - ", state.results, action.result);
-      // state.results.push(state.counter);
       return {
         ...state,
         results: state.results.concat([
@@ -25,4 +24,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default resultReducer;
