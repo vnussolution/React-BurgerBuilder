@@ -1,0 +1,6 @@
+export const INCREMENT = "INCREMENT";
+export const DECREMENT = "DECREMENT";
+export const ADDFIVE = "ADDFIVE";
+export const SUBSTRACT_FIVE = "SUBSTRACT_FIVE";
+export const STORE_NUMBER = "STORE_NUMBER";
+export const DELETE_STORE_NUMBER = "DELETE_STORE_NUMBER";
