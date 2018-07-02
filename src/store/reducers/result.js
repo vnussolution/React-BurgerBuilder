@@ -1,17 +1,17 @@
 import * as actionTypes from "../actions";
 
-const initialState = { counter: 0, results: [] };
+const initialState = { results: [] };
 
 const reducer = (state = initialState, action) => {
   console.log("reducer: ", action.type);
   switch (action.type) {
     case actionTypes.STORE_NUMBER:
-      console.log(" - ", state.results);
+      console.log(" - ", state.results, action.result);
       // state.results.push(state.counter);
       return {
         ...state,
         results: state.results.concat([
-          { id: new Date(), value: state.counter }
+          { id: new Date(), value: action.result }
         ])
       };
 
