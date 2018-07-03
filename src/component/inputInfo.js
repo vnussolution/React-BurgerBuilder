@@ -36,5 +36,4 @@ class InputInfo extends Component {
     );
   }
 }
-
 export default InputInfo;
