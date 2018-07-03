@@ -1,41 +1,37 @@
 import React, { Component } from "react";
 import "./App.css";
 import Block from "./component/block";
+import InputInfo from "./component/inputInfo";
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actionTypes";
 
 class App extends Component {
   state = { people: [] };
 
-  addPersonHandler = () => {
-    const person = { name: "frankie", age: Math.random() * 100 };
-    const newPeople = [...this.state.people, person];
-    this.setState({ people: newPeople });
-    console.log("===", newPeople, this.state);
-  };
+  addPersonHandler = (name, age) => {};
   componentDidMount() {
     console.log("--- ", this.state.people);
   }
 
   clickHandler = age => {
-    const people = this.state.people.slice();
-    this.setState({
-      people: this.state.people.filter(person => person.age !== age)
-    });
+    // const people = this.state.people.slice();
+    // this.setState({
+    //   people: this.state.people.filter(person => person.age !== age)
+    // });
+    this.props.onRemovePerson(age);
   };
 
   render() {
     return (
       <div className="App">
         <h2>hello </h2>
-
-        <button onClick={this.props.onAddPerson}> Add Person </button>
+        <InputInfo clicked={this.props.onAddPerson} />
         {this.props.people.map(person => (
           <Block
-            key={person.age}
+            key={person.id}
             name={person.name}
             age={person.age}
-            clicked={() => this.clickHandler(person.age)}
+            clicked={() => this.clickHandler(person.id)}
           />
         ))}
       </div>
@@ -48,7 +44,15 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return { onAddPerson: () => dispatch({ type: "ADD_PERSON" }) };
+  return {
+    onAddPerson: (name, age) =>
+      dispatch({
+        type: actionTypes.ADD_PERSON,
+        name: name,
+        age: age
+      }),
+    onRemovePerson: id => dispatch({ type: actionTypes.REMOVE_PERSON, id: id })
+  };
 };
 export default connect(
   mapStateToProps,
