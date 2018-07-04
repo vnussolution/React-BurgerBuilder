@@ -18,10 +18,13 @@ class App extends Component {
     // this.setState({
     //   people: this.state.people.filter(person => person.age !== age)
     // });
+
+    console.log("clickHandler ::", this.props.onRemovePerson(age));
     this.props.onRemovePerson(age);
   };
 
   render() {
+    console.log("++App.js++", this.props);
     return (
       <div className="App">
         <h2>hello </h2>
@@ -31,7 +34,7 @@ class App extends Component {
             key={person.id}
             name={person.name}
             age={person.age}
-            clicked={() => this.clickHandler(person.id)}
+            clicked={() => this.props.onRemovePerson(person.id)}
           />
         ))}
       </div>

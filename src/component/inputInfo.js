@@ -12,6 +12,8 @@ class InputInfo extends Component {
   };
 
   render() {
+    console.log("++inputInfo.js++", this.props);
+
     return (
       <div>
         <input
