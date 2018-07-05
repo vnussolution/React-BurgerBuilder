@@ -8,14 +8,14 @@ import axios from "../../axios-orders";
 import Spinner from "../../components/ui/spinner/spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
-import * as actionTypes from "../../store/actions";
+import * as actionTypes from "../../store/actions/index";
 import { connect } from "react-redux";
 
 class BurgerBuilder extends Component {
   state = {
-    showOrderSummary: false,
-    loading: false,
-    error: false
+    showOrderSummary: false
+    // loading: false,
+    // error: false
   };
 
   componentDidMount = () => {
@@ -130,15 +130,19 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => {
-  return { _ingredients: state.ingredients, _price: state.totalPrice };
+  return {
+    _ingredients: state.ingredients,
+    _price: state.totalPrice,
+    _error: state.error
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onAddIngredient: ingredientName =>
-      dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName }),
+      dispatch(actionTypes.addIngredient(ingredientName)),
     onRemoveIngredient: ingredientName =>
-      dispatch({ type: actionTypes.REMOVE_INGREDIENT, ingredientName })
+      dispatch(actionTypes.removeIngredient(ingredientName))
   };
 };
 
