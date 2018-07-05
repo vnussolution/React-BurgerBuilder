@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import CounterControl from "../../components/CounterControl/CounterControl";
 import CounterOutput from "../../components/CounterOutput/CounterOutput";
-import * as actionTypes from "../../store/actions";
+import * as actionCreators from "../../store/actions/index";
 
 class Counter extends Component {
   state = {
@@ -51,15 +51,14 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onIncrementCounter: () => dispatch({ type: actionTypes.INCREMENT }),
-    onDecrementCounter: () => dispatch({ type: actionTypes.DECREMENT }),
-    onAddFiveCounter: () => dispatch({ type: actionTypes.ADDFIVE, val: 5 }),
-    onSubstractFiveCounter: () =>
-      dispatch({ type: actionTypes.SUBSTRACT_FIVE, val: 6 }),
+    onIncrementCounter: () => dispatch(actionCreators.increment()),
+    onDecrementCounter: () => dispatch(actionCreators.decrement()),
+    onAddFiveCounter: () => dispatch(actionCreators.add_five(5)),
+    onSubstractFiveCounter: () => dispatch(actionCreators.substract_five(5)),
     onStoreNumber: counter =>
-      dispatch({ type: actionTypes.STORE_NUMBER, result: counter }),
+      dispatch(actionCreators.store_number_async(counter)),
     onDeleteStoreNumber: id =>
-      dispatch({ type: actionTypes.DELETE_STORE_NUMBER, id: id })
+      dispatch(actionCreators.delete_store_number_async(id))
   };
 };
 export default connect(
