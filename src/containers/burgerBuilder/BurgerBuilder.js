@@ -19,22 +19,23 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount = () => {
-    axios
-      .get("https://react-burger-9c0ef.firebaseio.com/ingredients.json")
-      .then(response => {
-        console.log(" componentDidMount Burgerbuilder: ");
-        if (response)
-          setTimeout(() => {
-            this.setState({ ingredients: response.data });
-            if (this.props._ingredients) {
-              this.canPurchaseHandler();
-            }
-          }, 1111);
-      })
-      .catch(error => {
-        this.setState({ error: true });
-        console.log("componentDidMount :error:", error);
-      });
+    // axios
+    //   .get("https://react-burger-9c0ef.firebaseio.com/ingredients.json")
+    //   .then(response => {
+    //     console.log(" componentDidMount Burgerbuilder: ");
+    //     if (response)
+    //       setTimeout(() => {
+    //         this.setState({ ingredients: response.data });
+    //         if (this.props._ingredients) {
+    //           this.canPurchaseHandler();
+    //         }
+    //       }, 1111);
+    //   })
+    //   .catch(error => {
+    //     this.setState({ error: true });
+    //     console.log("componentDidMount :error:", error);
+    //   });
+    this.props.onInitIngredients();
   };
 
   toggleOrderSummary = () => {
@@ -78,7 +79,7 @@ class BurgerBuilder extends Component {
     const ingredients = { ...this.props._ingredients };
     const disabled = {};
     let orderSummary = <Spinner message=" posting order" />;
-    let burgerControl = this.state.error ? (
+    let burgerControl = this.props._error ? (
       <h2>Problem with getting ingredients</h2>
     ) : (
       <Spinner message="getting ingredients" />
@@ -142,7 +143,8 @@ const mapDispatchToProps = dispatch => {
     onAddIngredient: ingredientName =>
       dispatch(actionTypes.addIngredient(ingredientName)),
     onRemoveIngredient: ingredientName =>
-      dispatch(actionTypes.removeIngredient(ingredientName))
+      dispatch(actionTypes.removeIngredient(ingredientName)),
+    onInitIngredients: () => dispatch(actionTypes.initIngredients())
   };
 };
 

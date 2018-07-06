@@ -5,6 +5,8 @@ import axios from "../../../axios-orders";
 import Spinner from "../../../components/ui/spinner/spinner";
 import Input from "../../../components/ui/input/input";
 import { connect } from "react-redux";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import * as actionTypes from "../../../store/actions/index";
 
 class contactData extends Component {
   state = {
@@ -119,16 +121,18 @@ class contactData extends Component {
       orderData: formData
     };
 
-    axios
-      .post("/orders.json", data)
-      .then(response => {
-        console.log("formdata", this.state.orderForm);
-        this.setState({ loading: false });
-        this.props.history.push("/");
-      })
-      .catch(error => {
-        this.setState({ loading: false });
-      });
+    // axios
+    //   .post("/orders.json", data)
+    //   .then(response => {
+    //     console.log("formdata", this.state.orderForm);
+    //     this.setState({ loading: false });
+    //     this.props.history.push("/");
+    //   })
+    //   .catch(error => {
+    //     this.setState({ loading: false });
+    //   });
+
+    this.props.onPurchaseBurger(data);
   };
   changeHandler = (event, identifier) => {
     // deep clone in reactjs
@@ -205,4 +209,13 @@ const mapStateToProps = state => {
   return { _ings: state.ingredients, _price: state.totalPrice };
 };
 
-export default connect(mapStateToProps)(contactData);
+const mapDispatchToProps = dispatch => {
+  return {
+    onPurchaseBurger: data => dispatch(actionTypes.purchaseBurgerAsync(data))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(contactData, axios));
