@@ -4,6 +4,8 @@ const initialState = { loading: false, orders: [] };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.PURCHASE_BURGER_START:
+      return { ...state, loading: true };
     case actionTypes.PURCHASE_BURGER_OK:
       const newOrder = { ...action.orderData, id: action.orderId };
       return {
@@ -12,7 +14,7 @@ const reducer = (state = initialState, action) => {
         orders: state.orders.concat(newOrder)
       };
     case actionTypes.PURCHASE_BURGER_FAILED:
-      return { ...state };
+      return { ...state, loading: false };
     default:
       return state;
   }

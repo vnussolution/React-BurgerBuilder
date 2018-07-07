@@ -25,13 +25,15 @@ export const fetchIngredientsFailed = () => {
 
 export const initIngredients = () => {
   return dispatch => {
-    axios
-      .get("https://react-burger-9c0ef.firebaseio.com/ingredients.1json")
-      .then(response => {
-        dispatch(setIngredients(response.data));
-      })
-      .catch(error => {
-        dispatch(fetchIngredientsFailed());
-      });
+    setTimeout(() => {
+      axios
+        .get("https://react-burger-9c0ef.firebaseio.com/ingredients.json")
+        .then(response => {
+          dispatch(setIngredients(response.data));
+        })
+        .catch(error => {
+          dispatch(fetchIngredientsFailed());
+        });
+    }, 2222);
   };
 };

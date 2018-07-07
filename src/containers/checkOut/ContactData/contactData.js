@@ -67,8 +67,7 @@ class contactData extends Component {
       }
     },
     formIsValid: false,
-    touchedAll: false,
-    loading: false
+    touchedAll: false
   };
 
   checkValidity(identifier, value, rules) {
@@ -193,7 +192,7 @@ class contactData extends Component {
         {false && <h1>hide me</h1>}
       </form>
     );
-    if (this.state.loading) {
+    if (this.props._loading) {
       form = <Spinner />;
     }
     return (
@@ -206,7 +205,11 @@ class contactData extends Component {
 }
 
 const mapStateToProps = state => {
-  return { _ings: state.ingredients, _price: state.totalPrice };
+  return {
+    _ings: state.ingredients,
+    _price: state.totalPrice,
+    _loading: state.loading
+  };
 };
 
 const mapDispatchToProps = dispatch => {

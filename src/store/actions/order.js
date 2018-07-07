@@ -9,19 +9,26 @@ export const purchaseBurger = (id, orderData) => {
   };
 };
 
+export const purchaseBurgerStart = () => {
+  return { type: actionTypes.PURCHASE_BURGER_START };
+};
+
 export const purchaseBurgerFailed = error => {
   return { type: actionTypes.PURCHASE_BURGER_FAILED, error: error };
 };
 
 export const purchaseBurgerAsync = orderData => {
   return dispatch => {
-    axios
-      .post("/orders.json", orderData)
-      .then(response => {
-        dispatch(purchaseBurger(response.data, orderData));
-      })
-      .catch(error => {
-        dispatch(purchaseBurgerFailed(error));
-      });
+    dispatch(purchaseBurgerStart());
+    setTimeout(() => {
+      axios
+        .post("/orders.json", orderData)
+        .then(response => {
+          dispatch(purchaseBurger(response.data, orderData));
+        })
+        .catch(error => {
+          dispatch(purchaseBurgerFailed(error));
+        });
+    }, 2222);
   };
 };
