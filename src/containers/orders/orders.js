@@ -2,42 +2,45 @@ import React, { Component } from "react";
 import Order from "../../components/order/order";
 import axios from "../../axios-orders";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import * as actionTypes from "../../store/actions/index";
+import { connect } from "react-redux";
+import Spinner from "../../components/ui/spinner/spinner";
 
 class orders extends Component {
-  state = {
-    orders: [],
-    loading: true
-  };
-
   componentDidMount() {
-    axios
-      .get("/orders.json")
-      .then(res => {
-        const fetchOrders = [];
-        for (let key in res.data) {
-          fetchOrders.push({ ...res.data[key], key: key });
-        }
-        this.setState({ loading: false, orders: fetchOrders });
-        console.log("Orders : componentDidMount ,", res.data);
-      })
-      .catch(err => {
-        this.setState({ loading: false });
-        console.log("Orders : componentDidMount , error:", err);
-      });
+    this.props.onFetchOrder();
   }
   render() {
-    return (
-      <div>
-        {this.state.orders.map(order => (
-          <Order
-            ingredients={order.ingredients}
-            key={order.key}
-            price={order.price}
-          />
-        ))}
-      </div>
-    );
+    let orders = <Spinner />;
+    if (!this.props.loading) {
+      orders = this.props.orders.map(order => (
+        <Order
+          ingredients={order.ingredients}
+          key={order.key}
+          price={order.price}
+          deleteOrder={() => this.props.onDeleteOrder(order.key)}
+        />
+      ));
+    }
+    return <div> {orders}</div>;
   }
 }
 
-export default withErrorHandler(orders, axios);
+const mapStateToProps = state => {
+  return {
+    orders: state.order.orders,
+    loading: state.order.loading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchOrder: () => dispatch(actionTypes.fetchOrdersAsync()),
+    onDeleteOrder: key => dispatch(actionTypes.deleteOrdersAsync(key))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(orders, axios));

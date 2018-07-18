@@ -24,11 +24,75 @@ export const purchaseBurgerAsync = orderData => {
       axios
         .post("/orders.json", orderData)
         .then(response => {
-          dispatch(purchaseBurger(response.data, orderData));
+          dispatch(purchaseBurger(response.data.name, orderData));
         })
         .catch(error => {
           dispatch(purchaseBurgerFailed(error));
         });
     }, 2222);
+  };
+};
+
+export const purchaseInit = () => {
+  return { type: actionTypes.PURCHASE_INIT };
+};
+
+export const fetchOrderStart = () => {
+  return { type: actionTypes.FETCH_ORDERS_START };
+};
+
+export const fetchOrder = orders => {
+  return { type: actionTypes.FETCH_ORDERS_OK, fetchedOrders: orders };
+};
+
+export const fetchOrderFailed = error => {
+  return { type: actionTypes.FETCH_ORDERS_FAILED, error: error };
+};
+
+export const fetchOrdersAsync = data => {
+  return dispatch => {
+    dispatch(fetchOrderStart());
+    setTimeout(() => {
+      axios
+        .get("/orders.json")
+        .then(res => {
+          const fetchOrders = [];
+          for (let key in res.data) {
+            fetchOrders.push({ ...res.data[key], key: key });
+          }
+          dispatch(fetchOrder(fetchOrders));
+        })
+        .catch(err => {
+          dispatch(fetchOrderFailed(err));
+        });
+    }, 1111);
+  };
+};
+
+export const deleteOrderStart = () => {
+  return { type: actionTypes.DELETE_ORDER_START };
+};
+
+export const deleteOrder = id => {
+  return { type: actionTypes.DELETE_ORDER_OK, id: id };
+};
+
+export const deleteOrderFailed = error => {
+  return { type: actionTypes.DELETE_ORDER_FAILED, error: error };
+};
+
+export const deleteOrdersAsync = id => {
+  return dispatch => {
+    dispatch(deleteOrderStart());
+    setTimeout(() => {
+      axios
+        .delete("/orders.json/", { params: { key: id } })
+        .then(res => {
+          dispatch(deleteOrder(id));
+        })
+        .catch(err => {
+          dispatch(deleteOrderFailed(err));
+        });
+    }, 1111);
   };
 };
