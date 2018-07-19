@@ -8,6 +8,7 @@ const items = props => {
         Burger builder
       </Item>
       <Item link="/orders"> Orders</Item>
+      <Item link="/auth"> Login</Item>
     </ul>
   );
 };

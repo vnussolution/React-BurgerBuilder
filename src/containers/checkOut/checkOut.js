@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 
 class CheckOut extends Component {
   cancel = () => {
-    console.log("cancel");
     this.props.history.goBack();
   };
 
