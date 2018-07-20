@@ -3,6 +3,8 @@ import Input from "../../components/ui/input/input";
 import Button from "../../components/ui/button/button";
 import classes from "./auth.css";
 
+import Spiner from "../../components/ui/spinner/spinner";
+
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/index";
 
@@ -31,8 +33,6 @@ class auth extends Component {
     newUser: false
   };
   checkValidity(identifier, value, rules) {
-    console.log("check checkValidity");
-
     let isValid = true;
     let message = "";
 
@@ -44,8 +44,6 @@ class auth extends Component {
     }
 
     if (rules.minLength) {
-      console.log("check minlength");
-
       isValid = value.length > rules.minLength && isValid;
       if (value.length < rules.minLength) {
         message += `${identifier}'s minLength is ${rules.minLength}. `;
@@ -60,13 +58,10 @@ class auth extends Component {
     }
 
     if (rules.isEmail) {
-      console.log("check email1");
       // isValid = value.length < rules.maxLength && isValid;
       const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
       isValid = pattern.test(value) && isValid;
       if (!isValid) {
-        console.log("check email2");
-
         message += ` ${identifier} is not correct`;
       }
     }
@@ -121,36 +116,60 @@ class auth extends Component {
       this.state.newUser
     );
   };
+
+  switchHandler = () => {
+    this.setState(prevState => {
+      return { newUser: !prevState.newUser };
+    });
+  };
   render() {
     const formElementArray = [];
 
     for (let key in this.state.authForm) {
       formElementArray.push({ id: key, config: this.state.authForm[key] });
     }
+
+    let form = (
+      <form onSubmit={this.submitAuthForm}>
+        {formElementArray.map(e => (
+          <Input
+            key={e.id}
+            elementtype={e.config.elementType}
+            elementconfig={e.config.elementConfig}
+            value={e.config.value}
+            errorMessage={e.config.errorMessage}
+            touched={e.config.touched}
+            shouldValidate={e.config.validation}
+            changed={event => this.changeHandler(event, e.id)}
+          />
+        ))}
+        <Button btnType="Success"> Submit </Button>
+      </form>
+    );
+    if (this.props._loading) {
+      console.log("loading.....");
+      form = <Spiner />;
+    }
+    let error = this.props._error ? <p> {this.props._error.message}</p> : null;
+    console.log("error: ", this.props._error);
     return (
       <div className={classes.auth}>
-        <form onSubmit={this.submitAuthForm}>
-          {formElementArray.map(e => (
-            <Input
-              key={e.id}
-              elementtype={e.config.elementType}
-              elementconfig={e.config.elementConfig}
-              value={e.config.value}
-              errorMessage={e.config.errorMessage}
-              touched={e.config.touched}
-              shouldValidate={e.config.validation}
-              changed={event => this.changeHandler(event, e.id)}
-            />
-          ))}
-          <Button btnType="Success"> Submit </Button>
-        </form>
-        <Button btnType="Danger">
+        {error}
+        {form}
+        <Button btnType="Danger" clicked={this.switchHandler}>
           SWITCH TO {this.state.newUser ? "LOGIN" : "SIGN UP"}
         </Button>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    _error: state.auth.error,
+    _loading: state.auth.loading
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -160,6 +179,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(auth);

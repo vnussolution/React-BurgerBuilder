@@ -5,12 +5,12 @@ export const authenticateStart = () => {
   return { type: actionTypes.AUTHENTICATE_START };
 };
 
-export const authenticateOk = data => {
-  return { type: actionTypes.AUTHENTICATE_OK, auth: data };
+export const authenticateOk = (token, id) => {
+  return { type: actionTypes.AUTHENTICATE_OK, idToken: token, userId: id };
 };
 
 export const authenticateFailed = error => {
-  return { type: actionTypes.AUTHENTICATE_FAILED, errror: error };
+  return { type: actionTypes.AUTHENTICATE_FAILED, error: error };
 };
 
 export const authenticateAsync = (email, password, newUser) => {
@@ -24,14 +24,18 @@ export const authenticateAsync = (email, password, newUser) => {
       url =
         "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCmI1Kg_nLZK7A2pkMM3PslRtbFzXFIhZw";
     }
-    axios
-      .post(payload)
-      .then(response => {
-        console.log(" new user: ", response);
-        dispatch(authenticateOk(response));
-      })
-      .catch(err => {
-        dispatch(authenticateFailed(err));
-      });
+    setTimeout(() => {
+      axios
+        .post(url, payload)
+        .then(response => {
+          console.log(" new user: ", response);
+          dispatch(
+            authenticateOk(response.data.idToken, response.data.localId)
+          );
+        })
+        .catch(err => {
+          dispatch(authenticateFailed(err.response.data.error));
+        });
+    }, 1111);
   };
 };
