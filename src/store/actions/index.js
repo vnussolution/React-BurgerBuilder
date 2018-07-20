@@ -10,3 +10,5 @@ export {
   fetchOrdersAsync,
   deleteOrdersAsync
 } from "./order";
+
+export { authenticateAsync } from "./auth";

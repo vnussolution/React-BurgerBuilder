@@ -3,6 +3,9 @@ import Input from "../../components/ui/input/input";
 import Button from "../../components/ui/button/button";
 import classes from "./auth.css";
 
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions/index";
+
 class auth extends Component {
   state = {
     authForm: {
@@ -24,7 +27,8 @@ class auth extends Component {
       }
     },
     formIsValid: false,
-    touchedAll: false
+    touchedAll: false,
+    newUser: false
   };
   checkValidity(identifier, value, rules) {
     console.log("check checkValidity");
@@ -86,7 +90,6 @@ class auth extends Component {
   }
   changeHandler = (event, identifier) => {
     // deep clone in reactjs
-    console.log("changeHandler: ", event, identifier);
 
     const updatedAuthForm = { ...this.state.authForm };
     const updatedFormElement = { ...updatedAuthForm[identifier] };
@@ -110,6 +113,14 @@ class auth extends Component {
       touchedAll: this.touchedAllFields()
     });
   };
+  submitAuthForm = event => {
+    event.preventDefault();
+    this.props.onSubmit(
+      this.state.authForm.email.value,
+      this.state.authForm.password.value,
+      this.state.newUser
+    );
+  };
   render() {
     const formElementArray = [];
 
@@ -118,7 +129,7 @@ class auth extends Component {
     }
     return (
       <div className={classes.auth}>
-        <form onSubmit={this.authenticate}>
+        <form onSubmit={this.submitAuthForm}>
           {formElementArray.map(e => (
             <Input
               key={e.id}
@@ -133,9 +144,22 @@ class auth extends Component {
           ))}
           <Button btnType="Success"> Submit </Button>
         </form>
+        <Button btnType="Danger">
+          SWITCH TO {this.state.newUser ? "LOGIN" : "SIGN UP"}
+        </Button>
       </div>
     );
   }
 }
 
-export default auth;
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmit: (email, password, newUser) =>
+      dispatch(actionCreators.authenticateAsync(email, password, newUser))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(auth);
