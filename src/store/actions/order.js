@@ -17,12 +17,12 @@ export const purchaseBurgerFailed = error => {
   return { type: actionTypes.PURCHASE_BURGER_FAILED, error: error };
 };
 
-export const purchaseBurgerAsync = orderData => {
+export const purchaseBurgerAsync = (orderData, token) => {
   return dispatch => {
     dispatch(purchaseBurgerStart());
     setTimeout(() => {
       axios
-        .post("/orders.json", orderData)
+        .post("/orders.json?auth=" + token, orderData)
         .then(response => {
           dispatch(purchaseBurger(response.data.name, orderData));
         })
@@ -49,12 +49,12 @@ export const fetchOrderFailed = error => {
   return { type: actionTypes.FETCH_ORDERS_FAILED, error: error };
 };
 
-export const fetchOrdersAsync = data => {
+export const fetchOrdersAsync = token => {
   return dispatch => {
     dispatch(fetchOrderStart());
     setTimeout(() => {
       axios
-        .get("/orders.json")
+        .get("/orders.json?auth=" + token)
         .then(res => {
           const fetchOrders = [];
           for (let key in res.data) {

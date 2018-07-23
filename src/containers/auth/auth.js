@@ -122,6 +122,10 @@ class auth extends Component {
       return { newUser: !prevState.newUser };
     });
   };
+
+  componentDidUpdate() {
+    console.log("logged out");
+  }
   render() {
     const formElementArray = [];
 
@@ -147,11 +151,9 @@ class auth extends Component {
       </form>
     );
     if (this.props._loading) {
-      console.log("loading.....");
       form = <Spiner />;
     }
     let error = this.props._error ? <p> {this.props._error.message}</p> : null;
-    console.log("error: ", this.props._error);
     return (
       <div className={classes.auth}>
         {error}
@@ -174,7 +176,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSubmit: (email, password, newUser) =>
-      dispatch(actionCreators.authenticateAsync(email, password, newUser))
+      dispatch(actionCreators.authenticateAsync(email, password, newUser)),
+    onLogout: () => {
+      dispatch(actionCreators.logout());
+    }
   };
 };
 

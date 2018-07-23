@@ -149,13 +149,13 @@ class contactData extends Component {
     //   .then(response => {
     //     console.log("formdata", this.state.orderForm);
     //     this.setState({ loading: false });
-    //     this.props.history.push("/");
+    //     this.props.history.push("/");=
     //   })
     //   .catch(error => {
     //     this.setState({ loading: false });
     //   });
 
-    this.props.onPurchaseBurger(data);
+    this.props.onPurchaseBurger(data, this.props._token);
   };
   changeHandler = (event, identifier) => {
     // deep clone in reactjs
@@ -230,13 +230,15 @@ const mapStateToProps = state => {
   return {
     _ings: state.burgerBuilder.ingredients,
     _price: state.burgerBuilder.totalPrice,
-    _loading: state.order.loading
+    _loading: state.order.loading,
+    _token: state.auth.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPurchaseBurger: data => dispatch(actionTypes.purchaseBurgerAsync(data))
+    onPurchaseBurger: (data, token) =>
+      dispatch(actionTypes.purchaseBurgerAsync(data, token))
   };
 };
 

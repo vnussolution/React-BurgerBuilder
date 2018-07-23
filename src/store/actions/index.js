@@ -11,4 +11,4 @@ export {
   deleteOrdersAsync
 } from "./order";
 
-export { authenticateAsync } from "./auth";
+export { authenticateAsync, logout } from "./auth";

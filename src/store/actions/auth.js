@@ -13,6 +13,18 @@ export const authenticateFailed = error => {
   return { type: actionTypes.AUTHENTICATE_FAILED, error: error };
 };
 
+export const logout = () => {
+  return { type: actionTypes.AUTHENTICATE_LOGOUT };
+};
+
+export const authenticateTimeoutAsync = expireTime => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(logout());
+    }, expireTime * 1000);
+  };
+};
+
 export const authenticateAsync = (email, password, newUser) => {
   return dispatch => {
     dispatch(authenticateStart());
@@ -32,6 +44,7 @@ export const authenticateAsync = (email, password, newUser) => {
           dispatch(
             authenticateOk(response.data.idToken, response.data.localId)
           );
+          dispatch(authenticateTimeoutAsync(response.data.expiresIn));
         })
         .catch(err => {
           dispatch(authenticateFailed(err.response.data.error));
