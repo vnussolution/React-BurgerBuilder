@@ -11,4 +11,9 @@ export {
   deleteOrdersAsync
 } from "./order";
 
-export { authenticateAsync, logout, setAuthRedirectPath } from "./auth";
+export {
+  authenticateAsync,
+  logout,
+  setAuthRedirectPath,
+  checkAuthentication
+} from "./auth";
