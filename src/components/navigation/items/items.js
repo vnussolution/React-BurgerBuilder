@@ -7,8 +7,12 @@ const items = props => {
       <Item link="/" exact>
         Burger builder
       </Item>
-      <Item link="/orders"> Orders</Item>
-      <Item link="/auth"> Login</Item>
+      {props.auth ? <Item link="/orders"> Orders</Item> : null}
+      {props.auth ? (
+        <Item link="/logout"> Logout</Item>
+      ) : (
+        <Item link="/auth"> Login</Item>
+      )}
     </ul>
   );
 };

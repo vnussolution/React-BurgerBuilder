@@ -17,7 +17,7 @@ const sideDrawer = props => {
           <Logo />
         </div>
         <nav>
-          <Items />
+          <Items auth={props.authenticated} />
         </nav>
       </div>
     </Aux>

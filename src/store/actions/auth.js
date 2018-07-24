@@ -52,3 +52,7 @@ export const authenticateAsync = (email, password, newUser) => {
     }, 1111);
   };
 };
+
+export const setAuthRedirectPath = path => {
+  return { type: actionTypes.SET_AUTH_REDIRECT_PATH, path: path };
+};

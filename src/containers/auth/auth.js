@@ -4,7 +4,7 @@ import Button from "../../components/ui/button/button";
 import classes from "./auth.css";
 
 import Spiner from "../../components/ui/spinner/spinner";
-
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/index";
 
@@ -14,7 +14,7 @@ class auth extends Component {
       email: {
         elementType: "email",
         elementConfig: { type: "text", placeholder: "your email" },
-        value: "",
+        value: "frank3@frank.com",
         validation: { required: true, isEmail: true },
         errorMessage: "",
         touched: false
@@ -22,7 +22,7 @@ class auth extends Component {
       password: {
         elementType: "password",
         elementConfig: { type: "password", placeholder: "your password" },
-        value: "",
+        value: "frankie",
         validation: { required: true, minLength: 6 },
         errorMessage: "",
         touched: false
@@ -126,6 +126,11 @@ class auth extends Component {
   componentDidUpdate() {
     console.log("logged out");
   }
+  componentDidMount() {
+    if (!this.props._buildingBurger && this.props._authRedirectPath !== "/") {
+      this.props.onSetAuthRedirectPath();
+    }
+  }
   render() {
     const formElementArray = [];
 
@@ -154,8 +159,12 @@ class auth extends Component {
       form = <Spiner />;
     }
     let error = this.props._error ? <p> {this.props._error.message}</p> : null;
+    const loginRedirect = this.props._authenticated ? (
+      <Redirect to={this.props._authRedirectPath} />
+    ) : null;
     return (
       <div className={classes.auth}>
+        {loginRedirect}
         {error}
         {form}
         <Button btnType="Danger" clicked={this.switchHandler}>
@@ -169,7 +178,10 @@ class auth extends Component {
 const mapStateToProps = state => {
   return {
     _error: state.auth.error,
-    _loading: state.auth.loading
+    _loading: state.auth.loading,
+    _authenticated: state.auth.token !== null,
+    _buildingBurger: state.burgerBuilder.building,
+    _authRedirectPath: state.auth.authRedirectPath
   };
 };
 
@@ -177,9 +189,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onSubmit: (email, password, newUser) =>
       dispatch(actionCreators.authenticateAsync(email, password, newUser)),
-    onLogout: () => {
-      dispatch(actionCreators.logout());
-    }
+    onSetAuthRedirectPath: () =>
+      dispatch(actionCreators.setAuthRedirectPath("/"))
   };
 };
 
