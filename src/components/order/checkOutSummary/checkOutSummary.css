@@ -4,9 +4,9 @@
   margin: auto;
 }
 
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
   .checkOutSummary {
     width: 700px;
     background-color: gray;
   }
-}
+} */

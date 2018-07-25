@@ -4,9 +4,9 @@ import classes from "./contactData.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/ui/spinner/spinner";
 import Input from "../../../components/ui/input/input";
-import { connect } from "react-redux";
+import { connect } from "../../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
-import * as actionTypes from "../../../store/actions/index";
+import * as actionTypes from "../../../store/actions";
 
 class contactData extends Component {
   state = {

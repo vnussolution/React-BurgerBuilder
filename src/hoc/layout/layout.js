@@ -3,7 +3,7 @@ import classes from "./layout.css";
 import Aux from "../aux/aux";
 import Toolbar from "../../components/navigation/toolbar/toolbar";
 import SideDrawer from "../../components/navigation/sideDrawer/sideDrawer";
-import { connect } from "react-redux";
+import { connect } from "../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux";
 
 class Layout extends Component {
   state = { showSideDrawer: false };

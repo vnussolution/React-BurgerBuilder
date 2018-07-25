@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Order from "../../components/order/order";
 import axios from "../../axios-orders";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import * as actionTypes from "../../store/actions/index";
-import { connect } from "react-redux";
+import * as actionTypes from "../../store/actions";
+import { connect } from "../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux";
 import Spinner from "../../components/ui/spinner/spinner";
 
 class orders extends Component {
