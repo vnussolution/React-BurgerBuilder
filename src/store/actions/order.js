@@ -29,7 +29,7 @@ export const purchaseBurgerAsync = (orderData, token) => {
         .catch(error => {
           dispatch(purchaseBurgerFailed(error));
         });
-    }, 2222);
+    }, 1111);
   };
 };
 

@@ -30,7 +30,7 @@ class auth extends Component {
     },
     formIsValid: false,
     touchedAll: false,
-    newUser: false
+    newUser: true
   };
   checkValidity(identifier, value, rules) {
     let isValid = true;

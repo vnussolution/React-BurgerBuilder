@@ -6,7 +6,7 @@ import CheckOutSummary from "./containers/checkOut/checkOut";
 import Orders from "./containers/orders/orders";
 import Logout from "./containers/auth/logout/logout";
 import Auth from "./containers/auth/auth";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionCreators from "./store/actions/index";
 
@@ -15,28 +15,47 @@ class App extends Component {
     this.props.autoLogin();
   }
   render() {
+    let routes = (
+      <Switch>
+        <Route path="/burger-builder" component={BurgerBuider} />
+        <Route path="/auth" component={Auth} />
+        {/* <Route path="/" component={BurgerBuider} /> */}
+        <Redirect to="/" /> {/* handle any wrong url by redirecting to / */}
+      </Switch>
+    );
+
+    if (this.props._authenticated) {
+      routes = (
+        <Switch>
+          <Route path="/burger-builder" component={BurgerBuider} />
+          <Route path="/checkout" component={CheckOutSummary} />
+          <Route path="/orders" component={Orders} />
+          <Route path="/logout" component={Logout} />
+          {/* <Route path="/" component={BurgerBuider} /> */}
+          <Redirect to="/" /> {/* handle any wrong url by redirecting to / */}
+        </Switch>
+      );
+    }
+
     return (
       <div className="App">
-        <Layout>
-          <Switch>
-            <Route path="/burger-builder" component={BurgerBuider} />
-            <Route path="/checkout" component={CheckOutSummary} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/auth" component={Auth} />
-            <Route component={BurgerBuider} />
-          </Switch>
-        </Layout>
+        <Layout>{routes} </Layout>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return { _authenticated: state.auth.token !== null };
+};
+
 const mapDispatchToProps = dispatch => {
   return { autoLogin: () => dispatch(actionCreators.checkAuthentication()) };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(App);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

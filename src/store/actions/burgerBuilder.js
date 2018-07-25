@@ -34,6 +34,6 @@ export const initIngredients = () => {
         .catch(error => {
           dispatch(fetchIngredientsFailed());
         });
-    }, 2222);
+    }, 1111);
   };
 };
