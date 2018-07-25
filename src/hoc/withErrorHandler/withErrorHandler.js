@@ -16,23 +16,23 @@ const withErrorHandler = (WrappedComponent, axios) => {
         error => {
           // always return response so that it can continue
           this.setState({ error: error });
-          console.log(
-            "reponse with error:: ",
-            error,
-            " message:::",
-            error.message
-          );
+          // console.log(
+          //   "reponse with error:: ",
+          //   error,
+          //   " message:::",
+          //   error.message
+          // );
         }
       );
     }
 
     // it will clean up axios interceptors when the component unmount
     componentWillUnmount() {
-      console.log(
-        "componentWillUnmount : ",
-        this.reqInterceptor,
-        this.resInterceptor
-      );
+      // console.log(
+      //   "componentWillUnmount : ",
+      //   this.reqInterceptor,
+      //   this.resInterceptor
+      // );
       axios.interceptors.request.eject(this.reqInterceptor);
       axios.interceptors.response.eject(this.resInterceptor);
     }

@@ -124,7 +124,7 @@ class auth extends Component {
   };
 
   componentDidUpdate() {
-    console.log("logged out");
+    // console.log("logged out");
   }
   componentDidMount() {
     if (!this.props._buildingBurger && this.props._authRedirectPath !== "/") {

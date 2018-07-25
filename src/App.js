@@ -19,7 +19,7 @@ class App extends Component {
       <Switch>
         <Route path="/burger-builder" component={BurgerBuider} />
         <Route path="/auth" component={Auth} />
-        {/* <Route path="/" component={BurgerBuider} /> */}
+        <Route path="/" exact component={BurgerBuider} />
         <Redirect to="/" /> {/* handle any wrong url by redirecting to / */}
       </Switch>
     );
@@ -31,7 +31,7 @@ class App extends Component {
           <Route path="/checkout" component={CheckOutSummary} />
           <Route path="/orders" component={Orders} />
           <Route path="/logout" component={Logout} />
-          {/* <Route path="/" component={BurgerBuider} /> */}
+          <Route path="/" exact component={BurgerBuider} />
           <Redirect to="/" /> {/* handle any wrong url by redirecting to / */}
         </Switch>
       );

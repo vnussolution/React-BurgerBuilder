@@ -44,7 +44,6 @@ export const authenticateAsync = (email, password, newUser) => {
       axios
         .post(url, payload)
         .then(response => {
-          console.log("..... ", response.data);
           const expireDate = new Date(
             new Date().getTime() + response.data.expiresIn * 1000
           );
@@ -76,7 +75,7 @@ export const checkAuthentication = () => {
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
       if (expirationDate > new Date()) {
-        const userId = localStorage.getItem("userid");
+        const userId = localStorage.getItem("userId");
         dispatch(authenticateOk(token, userId));
         dispatch(
           authenticateTimeoutAsync(

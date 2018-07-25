@@ -7,7 +7,7 @@ class Modal extends Component {
   // implement this hook to prevent updating any nested component
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("shouldComponentUpdate Modal ", nextProps, this.props);
+    // console.log("shouldComponentUpdate Modal ", nextProps, this.props);
     return (
       nextProps.show !== this.props.show ||
       // add this condition so that any changes from children can be detected,
@@ -17,7 +17,7 @@ class Modal extends Component {
   }
 
   componentWillUpdate() {
-    console.log("[Modal] componentWillUpdate");
+    // console.log("[Modal] componentWillUpdate");
   }
 
   render() {

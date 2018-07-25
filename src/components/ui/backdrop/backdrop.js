@@ -3,7 +3,6 @@ import Aux from "../../../hoc/aux/aux";
 import classes from "./backdrop.css";
 
 const backdrop = props => {
-  console.log("backdrop ", props.show);
   return (
     <Aux>
       {props.show ? (

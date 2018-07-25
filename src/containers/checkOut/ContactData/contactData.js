@@ -71,7 +71,7 @@ class contactData extends Component {
   };
 
   checkValidity(identifier, value, rules) {
-    console.log("check checkValidity");
+    // console.log("check checkValidity");
 
     let isValid = true;
     let message = "";
@@ -84,7 +84,7 @@ class contactData extends Component {
     }
 
     if (rules.minLength) {
-      console.log("check minlength");
+      // console.log("check minlength");
 
       isValid = value.length > rules.minLength && isValid;
       if (value.length < rules.minLength) {
@@ -100,13 +100,11 @@ class contactData extends Component {
     }
 
     if (rules.isEmail) {
-      console.log("check email1");
+      // console.log("check email1");
       // isValid = value.length < rules.maxLength && isValid;
       const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
       isValid = pattern.test(value) && isValid;
       if (!isValid) {
-        console.log("check email2");
-
         message += ` ${identifier} is not correct`;
       }
     }
@@ -141,7 +139,8 @@ class contactData extends Component {
     const data = {
       ingredients: this.props._ings,
       price: this.props._price,
-      orderData: formData
+      orderData: formData,
+      userId: this.props._userId
     };
 
     // axios
@@ -156,6 +155,7 @@ class contactData extends Component {
     //   });
 
     this.props.onPurchaseBurger(data, this.props._token);
+    // console.log("userid.....", data.userId);
   };
   changeHandler = (event, identifier) => {
     // deep clone in reactjs
@@ -227,11 +227,13 @@ class contactData extends Component {
 }
 
 const mapStateToProps = state => {
+  // console.log(" contactData : mapStateToProps", state);
   return {
     _ings: state.burgerBuilder.ingredients,
     _price: state.burgerBuilder.totalPrice,
     _loading: state.order.loading,
-    _token: state.auth.token
+    _token: state.auth.token,
+    _userId: state.auth.userId
   };
 };
 
