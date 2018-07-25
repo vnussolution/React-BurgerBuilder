@@ -4,10 +4,10 @@ import Button from "../../components/ui/button/button";
 import classes from "./auth.css";
 
 import Spiner from "../../components/ui/spinner/spinner";
-import { Redirect } from "../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-router-dom";
-import { connect } from "../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-// import { checkValidity } from "../../shared/utility";
+import { checkValidity } from "../../shared/utility";
 
 class auth extends Component {
   state = {
@@ -47,7 +47,7 @@ class auth extends Component {
     const updatedAuthForm = { ...this.state.authForm };
     const updatedFormElement = { ...updatedAuthForm[identifier] };
     updatedFormElement.value = event.target.value;
-    updatedFormElement.errorMessage = this.checkValidity(
+    updatedFormElement.errorMessage = checkValidity(
       identifier,
       updatedFormElement.value,
       updatedFormElement.validation

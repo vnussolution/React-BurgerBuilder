@@ -9,7 +9,7 @@ import Spinner from "../../components/ui/spinner/spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 import * as actionCreators from "../../store/actions";
-import { connect } from "../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux";
+import { connect } from "react-redux";
 
 class BurgerBuilder extends Component {
   state = {

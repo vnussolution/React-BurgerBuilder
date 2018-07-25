@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import CheckOutSummary from "../../components/order/checkOutSummary/checkOutSummary";
 import ContactData from "./ContactData/contactData";
-import {
-  Route,
-  Redirect
-} from "../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-router-dom";
-import { connect } from "../../../../../../Library/Caches/typescript/2.9/node_modules/@types/react-redux";
+import { Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 class CheckOut extends Component {
   cancel = () => {
