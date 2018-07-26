@@ -9,7 +9,7 @@ const items = props => {
       </Item>
       {props.auth ? <Item link="/orders"> Orders</Item> : null}
       {props.auth ? (
-        <Item link="/logout"> Logout</Item>
+        <Item link="/logout">Logout</Item>
       ) : (
         <Item link="/auth"> Login</Item>
       )}

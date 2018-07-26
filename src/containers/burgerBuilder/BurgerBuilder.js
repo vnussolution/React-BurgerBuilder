@@ -11,7 +11,7 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionCreators from "../../store/actions";
 import { connect } from "react-redux";
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
   state = {
     showOrderSummary: false
     // loading: false,
