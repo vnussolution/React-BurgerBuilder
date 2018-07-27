@@ -126,7 +126,7 @@ class auth extends Component {
         {error}
         {form}
         <Button btnType="Danger" clicked={this.switchHandler}>
-          SWITCH TO {this.state.newUser ? "LOGIN" : "SIGN UP"}
+          SWITCH TO {this.state.newUser ? "SIGN UP" : "LOGIN"}
         </Button>
       </div>
     );
